@@ -1,0 +1,52 @@
+# This workflow will build a golang project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+
+name: 代码编译测试
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: 1.21
+
+    - name: Get Git Commit Log
+      id: git-commit-log
+      run: echo "GIT_COMMIT_LOG=${{ github.sha }}" >> $GITHUB_ENV
+
+    - name: Get current time
+      uses: josStorer/get-current-time@v2
+      id: current-time
+      with:
+        format: YYYYMMDD-HH
+        utcOffset: "+08:00"
+
+    - name: Get Build Time
+      id: build-time
+      run: echo "BUILD_TIME=${{ steps.current-time.outputs.readableTime }}" >> $GITHUB_ENV
+
+    - name: Print Environment Variables
+      run: |
+        echo "${{env.GIT_COMMIT_LOG}}"
+        echo "${{env.BUILD_TIME}}"
+
+    - name: Install GF CLI dependencies
+      run: |
+        wget -O gf "https://github.com/gogf/gf/releases/latest/download/gf_$(go env GOOS)_$(go env GOARCH)" && chmod +x gf && ./gf install -y && rm ./gf
+
+    - name: GF CLI Build Binary
+      run: |
+        go build 
+        pwd
+

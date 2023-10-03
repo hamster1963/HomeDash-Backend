@@ -1,0 +1,10 @@
+# https://goframe.org/pages/viewpage.action?pageId=3673173
+gfcli:
+  build:
+    name: "service"
+    arch: "amd64" # all,386,amd64,arm64
+    system: "linux" # all,linux,darwin,windows....
+    packSrc: "manifest/config"
+    version: "release"
+    mod: ""
+    cgo: 0

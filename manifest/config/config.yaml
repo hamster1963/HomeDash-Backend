@@ -1,0 +1,28 @@
+# 服务配置:https://goframe.org/pages/viewpage.action?pageId=44449486
+server:
+  # 基本配置
+  address: ":10401"                     # 本地监听地址
+  serverAgent: "Hamster Server"         # 服务端Agent信息。默认为"GoFrame HTTP Server"
+  nameToUriType: 1                      # 路由注册中使用对象注册时的路由生成规则—-驼峰
+  clientMaxBodySize: 810241024          # 客户端最大Body上传限制大小，影响文件上传大小(Byte)。默认为8*1024*1024=8MB
+  formParsingMemory: 1048576            # 解析表单时的缓冲区大小(Byte)，一般不需要配置。默认为1024*1024=1MB
+
+  # 接口文档
+  openapiPath: "/api.json" # OpenAPI接口文档地址
+  swaggerPath: "/swagger"  # 内置SwaggerUI展示地址
+
+  # 服务日志配置（访问日志，错误日志）
+  logPath: "./LOG/server_log"          # 日志文件目录
+  logStdout: true                       # 是否输出到终端
+  errorStack: false                     # 是否记录错误堆栈信息
+  errorLogEnabled: true                 # 是否记录错误日志
+  errorLogPattern: "error.{Ymd}.log"    # 错误日志文件
+  # 日志配置:https://goframe.org/pages/viewpage.action?pageId=1114388
+  logger:
+    level: "all"            # 日志级别
+    stdout: true           # 是否输出到终端
+    path: "./LOG/"          # 日志输出目录
+    file: "log-{Y-m-d}.log" # 输出日志命名格式。
+    writerColorEnable: true  # 日志文件带有颜色
+
+
