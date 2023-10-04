@@ -5,13 +5,14 @@ import (
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcache"
+	"github.com/gogf/gf/v2/os/glog"
 	"home-network-watcher/manifest"
 	"time"
 
 	"home-network-watcher/api/data_core/v1"
 )
 
-func (c *ControllerV1) GetDockerMonitorSSE(ctx context.Context, _ *v1.GetDockerMonitorSSEReq) (res *v1.GetDockerMonitorSSERes, err error) {
+func (c *ControllerV1) GetDockerMonitorSSE(ctx context.Context, _ *v1.GetDockerMonitorSSEReq) (_ *v1.GetDockerMonitorSSERes, err error) {
 	request := g.RequestFromCtx(ctx)
 	request.Response.Header().Set("Content-Type", "text/event-stream")
 	request.Response.Header().Set("Cache-Control", "no-cache")
@@ -21,19 +22,19 @@ func (c *ControllerV1) GetDockerMonitorSSE(ctx context.Context, _ *v1.GetDockerM
 
 	for {
 		// 从缓存中获取数据
-		dockerData, err := gcache.Get(ctx, manifest.DockerMonitorCacheKey)
-		if err != nil {
-			return nil, err
-		}
-		res = &v1.GetDockerMonitorSSERes{DockerData: dockerData}
+		dockerData := gcache.MustGet(ctx, manifest.DockerMonitorCacheKey)
+		resJson := gjson.New(&v1.GetDockerMonitorSSERes{DockerData: dockerData}).MustToJsonString()
+
 		// 发送数据
-		request.Response.Writefln("data: " + gjson.New(res).MustToJsonString() + "\n")
+		request.Response.Writefln("data: " + resJson + "\n")
 		request.Response.Flush()
 
 		// 等待10秒或者上下文取消
 		select {
 		case <-time.After(10 * time.Second):
 		case <-ctx.Done():
+			glog.Info(ctx, "GetDockerMonitorSSE: ctx.Done()")
+			request.ExitAll()
 			return nil, ctx.Err()
 		}
 	}

@@ -5,13 +5,13 @@ import (
 	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gcache"
+	"github.com/gogf/gf/v2/os/glog"
+	"home-network-watcher/api/data_core/v1"
 	"home-network-watcher/manifest"
 	"time"
-
-	"home-network-watcher/api/data_core/v1"
 )
 
-func (c *ControllerV1) GetXuiDataSSE(ctx context.Context, _ *v1.GetXuiDataSSEReq) (res *v1.GetXuiDataSSERes, err error) {
+func (c *ControllerV1) GetXuiDataSSE(ctx context.Context, _ *v1.GetXuiDataSSEReq) (_ *v1.GetXuiDataSSERes, err error) {
 	request := g.RequestFromCtx(ctx)
 	request.Response.Header().Set("Content-Type", "text/event-stream")
 	request.Response.Header().Set("Cache-Control", "no-cache")
@@ -21,15 +21,20 @@ func (c *ControllerV1) GetXuiDataSSE(ctx context.Context, _ *v1.GetXuiDataSSEReq
 
 	for {
 		// 从缓存中获取数据
-		xuiData, err := gcache.Get(context.Background(), manifest.XUIUserListCacheKey)
-		if err != nil {
-			return nil, err
-		}
-		res = &v1.GetXuiDataSSERes{XuiData: xuiData}
+		xuiData := gcache.MustGet(context.Background(), manifest.XUIUserListCacheKey)
+		resJson := gjson.New(&v1.GetXuiDataSSERes{XuiData: xuiData}).MustToJsonString()
 		// 发送数据
-		request.Response.Writefln("data: " + gjson.New(res).MustToJsonString() + "\n")
+		request.Response.Writefln("data: " + resJson + "\n")
 		request.Response.Flush()
-		time.Sleep(5 * time.Second)
+
+		// 等待1秒或者上下文取消
+		select {
+		case <-time.After(1 * time.Second):
+		case <-ctx.Done():
+			glog.Info(ctx, "GetXuiDataSSE: ctx.Done()")
+			request.ExitAll()
+			return nil, ctx.Err()
+		}
 	}
 
 }
