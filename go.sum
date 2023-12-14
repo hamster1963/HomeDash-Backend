@@ -29,8 +29,8 @@ github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.4 h1:t4Ls/E022VMk5hc3a4IgWO3xGNEQ
 github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.4/go.mod h1:1P7id3OWFb3lkp1zBKdGqRoVXgYAjATzky++tGh2vxc=
 github.com/gogf/gf/v2 v2.5.4 h1:UBCSw8mInkHmEqL0E1LYc6QhSpaNFY/wHcFrTI/rzTk=
 github.com/gogf/gf/v2 v2.5.4/go.mod h1:7yf5qp0BznfsYx7Sw49m3mQvBsHpwAjJk3Q9ZnKoUEc=
-github.com/golang-jwt/jwt/v5 v5.0.0 h1:1n1XNM9hk7O9mnQoNBGolZvzebBQ7p93ULHRc28XJUE=
-github.com/golang-jwt/jwt/v5 v5.0.0/go.mod h1:pqrtFR0X4osieyHYxtmOUWsAWrfe1Q5UVIyoH402zdk=
+github.com/golang-jwt/jwt/v5 v5.2.0 h1:d/ix8ftRUorsN+5eMIlF4T6J8CAt9rch3My2winC1Jw=
+github.com/golang-jwt/jwt/v5 v5.2.0/go.mod h1:pqrtFR0X4osieyHYxtmOUWsAWrfe1Q5UVIyoH402zdk=
 github.com/google/go-cmp v0.5.9 h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=
 github.com/google/go-cmp v0.5.9/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/google/uuid v1.5.0 h1:1p67kYwdtXjb0gL0BPiP1Av9wiZPo5A8z2cWkTZ+eyU=
