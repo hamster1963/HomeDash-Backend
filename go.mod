@@ -3,7 +3,7 @@ module home-network-watcher
 go 1.21
 
 require (
-	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.4
+	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.5.7
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.7
 	github.com/gogf/gf/v2 v2.5.7
 	github.com/golang-jwt/jwt/v5 v5.2.0
