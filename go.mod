@@ -7,7 +7,7 @@ require (
 	github.com/gogf/gf/contrib/nosql/redis/v2 v2.5.7
 	github.com/gogf/gf/v2 v2.5.7
 	github.com/golang-jwt/jwt/v5 v5.2.0
-	github.com/google/uuid v1.5.0
+	github.com/google/uuid v1.6.0
 	github.com/hamster1963/360-router-data-retriever v0.2.8
 )
 
